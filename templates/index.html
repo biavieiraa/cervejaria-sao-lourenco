@@ -80,9 +80,14 @@
             color: #1e293b !important;
             border-color: #e2e8f0 !important;
         }
+        body.light-mode .border-stone-800 {
+            border-color: #e2e8f0 !important;
+        }
         body.light-mode .text-white {
             color: #0f172a !important;
         }
+        body.light-mode .text-stone-100,
+        body.light-mode .text-stone-200,
         body.light-mode .text-stone-300,
         body.light-mode .text-stone-400 {
             color: #475569 !important;
@@ -98,6 +103,14 @@
             background-color: #f1f5f9 !important;
             color: #0f172a !important;
             border-color: #cbd5e1 !important;
+        }
+        /* Ajuste específico para a seção de Barris no Modo Claro */
+        body.light-mode #barris .barris-overlay {
+            background-color: rgba(248, 250, 252, 0.90) !important;
+        }
+        body.light-mode .keg-img-container {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
         }
     </style>
 </head>
@@ -130,9 +143,8 @@
             <div class="flex items-center justify-between h-20">
                 
                 <a href="#home" class="flex items-center space-x-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-stone-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition duration-200 border border-amber-300">
-                        <i class="fa-solid fa-beer-mug-empty text-2xl"></i>
-                    </div>
+                    <img src="{% static 'logo.webp' %}" alt="Cervejaria São Lourenço Logo" class="w-12 h-12 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition duration-200 border border-amber-300 bg-stone-900">
+                    
                     <div class="flex flex-col">
                         <span class="font-display font-extrabold text-xl leading-tight text-white tracking-wider">SÃO LOURENÇO</span>
                         <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">DA MATA • CERVEJARIA</span>
@@ -201,7 +213,6 @@
 
     <section id="cervejas" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div class="text-center mb-14">
-          
             <h2 class="text-3xl sm:text-4xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
                 CERVEJAS ARTESANAIS EM GARRAFA
             </h2>
@@ -213,11 +224,11 @@
         </div>
 
         <div id="beerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            </div>
+        </div>
     </section>
 
-    <section id="barris" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-b border-stone-800 relative bg-cover bg-center bg-no-repeat" style="background-image: url('{% static 'banner_barril.jpg' %}');">
-        <div class="absolute inset-0 bg-stone-950/85 backdrop-blur-[2px]"></div>
+    <section id="barris" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-b border-stone-800 relative bg-cover bg-center bg-no-repeat" style="background-image: url('{% static "banner_barril.jpg" %}');">
+        <div class="barris-overlay absolute inset-0 bg-stone-950/85 backdrop-blur-[2px]"></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-14">
@@ -233,7 +244,7 @@
             </div>
 
             <div id="kegProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                </div>
+            </div>
         </div>
     </section>
 
@@ -243,7 +254,7 @@
             <div class="relative">
                 <div class="rounded-3xl overflow-hidden border-2 border-amber-500/40 bg-stone-900 shadow-2xl relative">
                     <video controls playsinline class="w-full h-auto max-h-[500px] object-cover rounded-3xl" poster="{% static 'banner_principal.jpg' %}">
-                        <source src="{% static 'WhatsApp Video 2026-09-23 at 18.30.49.mp4' %}" type="video/mp4">
+                        <source src="{% static 'video.mp4' %}" type="video/mp4">
                         Seu navegador não suporta a reprodução de vídeo.
                     </video>
                 </div>
@@ -280,7 +291,7 @@
         <div class="max-w-7xl mx-auto space-y-8">
             
             <div class="rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl bg-stone-950 flex justify-center items-center">
-                <img src="{% static 'insta.jpg' %}" alt="Instagram Cervejaria São Lourenço da Mata" class="w-full max-h-[450px] object-contain sm:object-cover">
+                <img src="{% static 'bannerinsta.avif' %}" alt="Instagram Cervejaria São Lourenço da Mata" class="w-full max-h-[450px] object-contain sm:object-cover">
             </div>
 
             <div class="flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 rounded-2xl gap-4 shadow-xl text-stone-950">
@@ -291,7 +302,7 @@
                         <p class="text-xs font-semibold">Acompanhe novidades, bastidores e promoções exclusivas da fábrica!</p>
                     </div>
                 </div>
-                <a href="https://instagram.com/cerveja.saolourenco" target="_blank" rel="noopener noreferrer" class="bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-xl transition duration-200 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                <a href="https://www.instagram.com/cerveja.saolourenco?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-xl transition duration-200 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer">
                     @cerveja.saolourenco
                 </a>
             </div>
@@ -310,8 +321,8 @@
                             <i class="fa-solid fa-location-dot text-amber-400 text-lg mt-1"></i>
                             <div>
                                 <p class="font-bold text-white">Endereço da Fábrica:</p>
-                                <p class="text-xs text-stone-400">Rua Brasil, S/N, Chã de Tábua, São Lourenço - PE</p>
-                                <p class="text-xs text-stone-400">CEP: 54.745-840</p>
+                                <p class="text-xs text-stone-400">Rua Brasil, S/N, Chã de Tábua São Lourenço</p>
+                                <p class="text-xs text-stone-400">Cep: 54.745-840</p>
                             </div>
                         </div>
                         <div class="flex items-start space-x-3">
@@ -363,8 +374,7 @@
             </div>
 
             <div class="text-center pt-8 border-t border-stone-800 text-stone-400 text-xs sm:text-sm font-semibold tracking-wide">
-                <p class="text-amber-400 uppercase font-bold mb-1">🔞 Beba com moderação.</p>
-                <p>Não compartilhe este conteúdo com menores de idade.</p>
+                <p class="text-amber-400 uppercase font-bold mb-1">Beba com moderação. Não compartilhe este conteúdo com menores de idade.</p>
                 <p class="text-[11px] text-stone-500 mt-3">© 2026 Cervejaria São Lourenço da Mata. Todos os direitos reservados.</p>
             </div>
 
@@ -400,7 +410,6 @@
     </div>
 
     <script>
-        // --- 1. MODO CLARO / ESCURO (THEME TOGGLE) ---
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById("themeIcon");
@@ -415,7 +424,6 @@
             }
         }
 
-        // --- 2. VERIFICAÇÃO DE IDADE (+18) ---
         document.addEventListener("DOMContentLoaded", function() {
             const isAgeVerified = localStorage.getItem("ageVerified");
             const ageModal = document.getElementById("ageModal");
@@ -438,7 +446,6 @@
             }
         }
 
-        // --- 3. MENU MOBILE ---
         function toggleMobileMenu() {
             const menu = document.getElementById("mobileMenu");
             if (menu) {
@@ -446,7 +453,6 @@
             }
         }
 
-        // --- 4. SLIDER DE BANNERS ---
         let currentSlide = 1;
         function showSlide(index) {
             const slide1 = document.getElementById("slide1");
@@ -481,24 +487,23 @@
 
         setInterval(() => { nextSlide(); }, 6000);
 
-        // --- 5. RENDERIZAÇÃO DE PRODUTOS (5 CERVEJAS) ---
         const beers = [
-            { id: 1, name: "Blonde Ale", style: "Garrafa Vidro", vol: "600ml", price: 14.00, img: "{% static 'banner_garrafa.jpg' %}" },
-            { id: 2, name: "American Pale Ale", style: "Garrafa Vidro", vol: "600ml", price: 16.00, img: "{% static 'banner_garrafa.jpg' %}" },
-            { id: 3, name: "Growler PET American Pale Ale", style: "Garrafa PET", vol: "1 Litro", price: 16.00, img: "{% static 'banner_garrafa.jpg' %}" },
-            { id: 4, name: "Growler PET Blonde Ale", style: "Garrafa PET", vol: "1 Litro", price: 14.00, img: "{% static 'banner_garrafa.jpg' %}" },
-            { id: 5, name: "Kit Personalizado Presenteável", style: "Kit 3 Garrafas", vol: "Caixa Presente", price: 60.00, img: "{% static 'caixa_banner.jpeg' %}" }
+            { id: 1, name: "Blonde Ale", style: "Garrafa Vidro", vol: "600ml", price: 14.00, img1: "{% static 'blondeale.jpeg' %}", img2: "{% static 'blondeale2.jpeg' %}" },
+            { id: 2, name: "American Pale Ale", style: "Garrafa Vidro", vol: "600ml", price: 16.00, img1: "{% static 'american.jpeg' %}", img2: "{% static 'american2.jpeg' %}" },
+            { id: 3, name: "Growler PET American Pale Ale", style: "Garrafa PET", vol: "1 Litro", price: 16.00, img1: "{% static 'growler.jpeg' %}", img2: "{% static 'growler2.jpeg' %}" },
+            { id: 4, name: "Growler PET Blonde Ale", style: "Garrafa PET", vol: "1 Litro", price: 14.00, img1: "{% static 'growler.jpeg' %}", img2: "{% static 'growler2.jpeg' %}" },
+            { id: 5, name: "Kit Personalizado Presenteável", style: "Kit 3 Garrafas", vol: "Caixa Presente", price: 60.00, img1: "{% static 'kit.jpeg' %}", img2: "{% static 'kit2.jpeg' %}" }
         ];
 
         const kegs = [
-            { id: 101, name: "Chopp Barril Blonde Ale 10L", style: "", vol: "10 Litros", price: 120.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 102, name: "Chopp Barril Blonde Ale 20L", style: "", vol: "20 Litros", price: 240.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 103, name: "Chopp Barril Blonde Ale 30L", style: "", vol: "30 Litros", price: 360.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 104, name: "Chopp Barril Blonde Ale 50L", style: "", vol: "50 Litros", price: 600.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 105, name: "Chopp Barril American Pale Ale 10L", style: "", vol: "10 Litros", price: 140.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 106, name: "Chopp Barril American Pale Ale 20L", style: "", vol: "20 Litros", price: 280.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 107, name: "Chopp Barril American Pale Ale 30L", style: "", vol: "30 Litros", price: 420.00, img: "{% static 'banner_barril.jpg' %}" },
-            { id: 108, name: "Chopp Barril American Pale Ale 50L", style: "", vol: "50 Litros", price: 700.00, img: "{% static 'banner_barril.jpg' %}" }
+            { id: 101, name: "Chopp Barril Blonde Ale 10L", style: "", vol: "10 Litros", price: 120.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 102, name: "Chopp Barril Blonde Ale 20L", style: "", vol: "20 Litros", price: 240.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 103, name: "Chopp Barril Blonde Ale 30L", style: "", vol: "30 Litros", price: 360.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 104, name: "Chopp Barril Blonde Ale 50L", style: "", vol: "50 Litros", price: 600.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 105, name: "Chopp Barril American Pale Ale 10L", style: "", vol: "10 Litros", price: 140.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 106, name: "Chopp Barril American Pale Ale 20L", style: "", vol: "20 Litros", price: 280.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 107, name: "Chopp Barril American Pale Ale 30L", style: "", vol: "30 Litros", price: 420.00, img: "{% static 'barrilbranco.avif.jpeg' %}" },
+            { id: 108, name: "Chopp Barril American Pale Ale 50L", style: "", vol: "50 Litros", price: 700.00, img: "{% static 'barrilbranco.avif.jpeg' %}" }
         ];
 
         function renderProducts() {
@@ -508,8 +513,9 @@
             if (beerGrid) {
                 beerGrid.innerHTML = beers.map(item => `
                     <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between shadow-xl">
-                        <div class="h-44 bg-stone-950 rounded-xl mb-3 overflow-hidden flex items-center justify-center">
-                            <img src="${item.img}" alt="${item.name}" class="h-full object-cover">
+                        <div class="keg-img-container h-44 bg-stone-950 rounded-xl mb-3 overflow-hidden flex gap-1 items-center justify-center">
+                            <img src="${item.img1}" alt="${item.name} Imagem 1" class="h-full w-1/2 object-cover">
+                            <img src="${item.img2}" alt="${item.name} Imagem 2" class="h-full w-1/2 object-cover">
                         </div>
                         <div>
                             <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">${item.style} • ${item.vol}</span>
@@ -527,8 +533,8 @@
 
             if (kegGrid) {
                 kegGrid.innerHTML = kegs.map(item => `
-                    <div class="bg-stone-900/90 border border-stone-800 rounded-2xl p-5 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between shadow-xl backdrop-blur-sm">
-                        <div class="h-48 bg-stone-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                    <div class="bg-stone-900 border border-stone-800 rounded-2xl p-5 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between shadow-xl backdrop-blur-sm">
+                        <div class="keg-img-container h-48 bg-stone-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                             <img src="${item.img}" alt="${item.name}" class="h-full object-cover">
                         </div>
                         <div>
@@ -547,7 +553,6 @@
             }
         }
 
-        // --- 6. CARRINHO DE COMPRAS ---
         let cart = [];
 
         function toggleCartDrawer() {
@@ -611,7 +616,6 @@
             window.open(`https://wa.me/5581998765432?text=${text}`, '_blank');
         }
 
-        // --- 7. FORMULÁRIO DE CONTATO ---
         function handleContactSubmit(e) {
             e.preventDefault();
             alert("Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.");
