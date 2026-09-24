@@ -115,7 +115,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
 
 # Email
@@ -132,6 +131,7 @@ import os
 # Ajuste no TEMPLATES para reconhecer a pasta templates
 TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'templates')]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Configuração de arquivos estáticos e imagens enviadas
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
