@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n%d0y#z&4u6y3!kfclyey5shnc2t5jlj$#f0tz&afp2v2(ac&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 1. Permite que qualquer pessoa acesse através do link do Render
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = []
+# 2. Desativa o modo de depuração para mostrar o site normal em vez de telas de erro
+DEBUG = False
 
 
 # Application definition
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,3 +141,4 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
