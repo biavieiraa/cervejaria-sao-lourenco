@@ -1,10 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cervejaria São Lourenço da Mata - Cervejas Artesanais & Barris de Chopp</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,11 +27,9 @@
             }
         }
     </script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -39,6 +37,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #0f0e0d;
             color: #f3f4f6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .font-display {
             font-family: 'Oswald', sans-serif;
@@ -46,11 +45,6 @@
         .glass-nav {
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(12px);
-        }
-        .glass-card {
-            background: rgba(38, 38, 38, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(243, 168, 18, 0.15);
         }
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -66,16 +60,49 @@
         .carousel-slide {
             transition: opacity 0.6s ease-in-out;
         }
-        /* Credit card flip preview effect */
-        .card-visual {
-            background: linear-gradient(135deg, #2c1810 0%, #e8830c 50%, #1a1a1a 100%);
-            box-shadow: 0 10px 25px -5px rgba(232, 131, 12, 0.3);
+
+        /* --- ESTILOS DO MODO CLARO (LIGHT MODE) --- */
+        body.light-mode {
+            background-color: #f8fafc !important;
+            color: #1e293b !important;
+        }
+        body.light-mode .glass-nav {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode header nav a,
+        body.light-mode header span {
+            color: #1e293b !important;
+        }
+        body.light-mode .bg-stone-900,
+        body.light-mode .bg-stone-950 {
+            background-color: #ffffff !important;
+            color: #1e293b !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode .text-stone-300,
+        body.light-mode .text-stone-400 {
+            color: #475569 !important;
+        }
+        body.light-mode .bg-stone-800 {
+            background-color: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-mode input, 
+        body.light-mode select, 
+        body.light-mode textarea {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative antialiased selection:bg-amber-500 selection:text-black">
 
-    <!-- Age Check Verification Modal (+18) -->
     <div id="ageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 transition-opacity duration-300">
         <div class="bg-stone-900 border-2 border-amber-500 rounded-2xl max-w-md w-full p-8 text-center shadow-2xl relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
@@ -87,10 +114,10 @@
                 Você está prestes a entrar no site oficial da <strong class="text-amber-400">Cervejaria São Lourenço da Mata</strong>. Confirme se você possui 18 anos ou mais.
             </p>
             <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="confirmAge(true)" class="flex-1 bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 px-6 rounded-xl transition duration-200 shadow-lg shadow-amber-500/20 uppercase text-sm tracking-wider">
+                <button type="button" onclick="confirmAge(true)" class="flex-1 bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 px-6 rounded-xl transition duration-200 shadow-lg shadow-amber-500/20 uppercase text-sm tracking-wider cursor-pointer">
                     Tenho 18+ anos
                 </button>
-                <button onclick="confirmAge(false)" class="flex-1 bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold py-3.5 px-6 rounded-xl transition duration-200 text-sm">
+                <button type="button" onclick="confirmAge(false)" class="flex-1 bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold py-3.5 px-6 rounded-xl transition duration-200 text-sm cursor-pointer">
                     Sou menor
                 </button>
             </div>
@@ -98,12 +125,10 @@
         </div>
     </div>
 
-    <!-- Navigation Header -->
     <header class="sticky top-0 z-40 glass-nav border-b border-stone-800 shadow-xl transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- Brand Logo -->
                 <a href="#home" class="flex items-center space-x-3 group">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-stone-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition duration-200 border border-amber-300">
                         <i class="fa-solid fa-beer-mug-empty text-2xl"></i>
@@ -114,39 +139,25 @@
                     </div>
                 </a>
 
-                <!-- Desktop Navigation Links -->
                 <nav class="hidden md:flex items-center space-x-8 font-semibold text-stone-300 text-sm tracking-wide">
                     <a href="#home" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400">Home</a>
                     <a href="#cervejas" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400">Cervejas</a>
                     <a href="#barris" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400">Barris de Chopp</a>
                     <a href="#historia" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400">História</a>
-                    <a href="#meus-pedidos" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400 relative">
-                        Meus Pedidos
-                        <span id="ordersBadgeNav" class="hidden absolute -top-2 -right-3 bg-amber-500 text-stone-950 text-[10px] font-black w-4 h-4 rounded-full items-center justify-center">0</span>
-                    </a>
+                    <a href="#contato" class="hover:text-amber-400 transition duration-150 py-1 border-b-2 border-transparent hover:border-amber-400">Contato</a>
                 </nav>
 
-                <!-- Header Actions -->
                 <div class="flex items-center space-x-3 sm:space-x-4">
                     
-                    <!-- Email Simulator Trigger Button -->
-                    <button onclick="toggleEmailInboxModal()" class="p-2.5 text-stone-300 hover:text-amber-400 bg-stone-800/80 hover:bg-stone-800 rounded-xl transition duration-150 border border-stone-700 relative" title="Simulador de E-mails Enviados">
-                        <i class="fa-solid fa-envelope text-lg"></i>
-                        <span id="emailBadge" class="absolute -top-1 -right-1 bg-amber-500 text-stone-950 text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                    <button onclick="toggleTheme()" class="p-2.5 text-stone-300 hover:text-amber-400 bg-stone-800 hover:bg-stone-700 rounded-xl transition duration-150 border border-stone-700 cursor-pointer" title="Alternar Modo Claro / Escuro">
+                        <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                     </button>
 
-                    <!-- User Account / Auth Button -->
-                    <div id="userAuthContainer" class="relative">
-                        <!-- Rendered by JS based on logged in state -->
-                    </div>
-
-                    <!-- Cart Drawer Toggle -->
-                    <button onclick="toggleCartDrawer()" class="p-2.5 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold transition duration-150 rounded-xl shadow-lg shadow-amber-500/20 flex items-center space-x-2">
+                    <button onclick="toggleCartDrawer()" class="p-2.5 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold transition duration-150 rounded-xl shadow-lg shadow-amber-500/20 flex items-center space-x-2 cursor-pointer">
                         <i class="fa-solid fa-cart-shopping text-base"></i>
                         <span id="cartBadge" class="bg-stone-950 text-amber-400 text-xs font-black px-2 py-0.5 rounded-md">0</span>
                     </button>
 
-                    <!-- Mobile Menu Button -->
                     <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-stone-300 hover:text-amber-400 focus:outline-none">
                         <i id="menuIcon" class="fa-solid fa-bars text-2xl"></i>
                     </button>
@@ -154,277 +165,144 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden bg-stone-900 border-b border-stone-800 px-4 pt-2 pb-6 space-y-3 shadow-2xl">
             <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium border-b border-stone-800">Home</a>
             <a href="#cervejas" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium border-b border-stone-800">Cervejas Artesanais</a>
             <a href="#barris" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium border-b border-stone-800">Barris de Chopp</a>
             <a href="#historia" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium border-b border-stone-800">História</a>
-            <a href="#meus-pedidos" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium border-b border-stone-800">Meus Pedidos</a>
             <a href="#contato" onclick="toggleMobileMenu()" class="block py-2 text-stone-200 hover:text-amber-400 font-medium">Contato</a>
         </div>
     </header>
 
-    <!-- Hero Banner Slider -->
-    <section id="home" class="relative bg-gradient-to-r from-stone-950 via-amber-950/40 to-stone-950 overflow-hidden border-b border-stone-800">
-        <div class="relative max-w-7xl mx-auto min-h-[520px] flex items-center">
+    <section id="home" class="relative bg-stone-950 overflow-hidden border-b border-stone-800">
+        <div class="relative max-w-7xl mx-auto w-full aspect-[16/6] sm:aspect-[16/5] flex items-center justify-center overflow-hidden">
             
-            <!-- Slide 1: Craft Bottles -->
-            <div id="slide1" class="carousel-slide absolute inset-0 w-full h-full flex items-center opacity-100 transition-opacity duration-700">
-                <div class="px-4 sm:px-6 lg:px-8 w-full py-12">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div class="space-y-5 text-center md:text-left z-10">
-                            <span class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 text-amber-400 text-xs font-bold rounded-full uppercase tracking-widest border border-amber-500/30">
-                                <i class="fa-solid fa-award"></i> Produção Local em Pernambuco
-                            </span>
-                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-tight uppercase text-white tracking-wide">
-                                O Legítimo Sabor de <span class="text-amber-400">São Lourenço</span>
-                            </h1>
-                            <p class="text-stone-300 text-base sm:text-lg max-w-lg">
-                                Cervejas artesanais puro malte com ingredientes nobres. Escolha sua garrafa ou barril de chopp e receba em casa com pagamento via PIX ou Cartão.
-                            </p>
-                            <div class="pt-2 flex flex-wrap gap-4 justify-center md:justify-start">
-                                <a href="#cervejas" class="bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold px-7 py-3.5 rounded-xl transition duration-200 shadow-xl shadow-amber-500/20 flex items-center space-x-2 uppercase text-sm tracking-wider">
-                                    <span>Ver Cervejas</span>
-                                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                                </a>
-                                <a href="#barris" class="bg-stone-800 hover:bg-stone-700 text-white font-bold px-6 py-3.5 rounded-xl border border-stone-700 transition duration-200 text-sm">
-                                    Barris de Chopp
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex justify-center items-center relative">
-                            <!-- Graphical Mockup Display -->
-                            <div class="relative w-72 h-72 sm:w-88 sm:h-88 rounded-full bg-amber-500/10 flex items-center justify-center p-6 border border-amber-500/20 shadow-2xl">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-32 h-64 bg-stone-900 rounded-2xl border-2 border-amber-500/50 flex flex-col justify-between p-3 transform -rotate-6 hover:rotate-0 transition duration-300 shadow-2xl">
-                                        <div class="w-8 h-8 bg-amber-500 rounded-full mx-auto flex items-center justify-center text-stone-950 text-xs font-black">IPA</div>
-                                        <div class="bg-amber-500/20 text-center p-2 rounded-lg border border-amber-500/30">
-                                            <p class="text-[10px] font-extrabold text-amber-400 uppercase">Artensanal</p>
-                                            <p class="font-display font-bold text-xs text-white">INDIAN PALE</p>
-                                        </div>
-                                        <p class="text-center text-amber-400 text-xs font-bold">500ml • 6.5%</p>
-                                    </div>
-                                    <div class="w-32 h-64 bg-stone-900 rounded-2xl border-2 border-amber-400/50 flex flex-col justify-between p-3 transform rotate-6 hover:rotate-0 transition duration-300 shadow-2xl">
-                                        <div class="w-8 h-8 bg-amber-400 rounded-full mx-auto flex items-center justify-center text-stone-950 text-xs font-black">APA</div>
-                                        <div class="bg-amber-400/20 text-center p-2 rounded-lg border border-amber-400/30">
-                                            <p class="text-[10px] font-extrabold text-amber-300 uppercase">Puro Malte</p>
-                                            <p class="font-display font-bold text-xs text-white">AMERICAN APA</p>
-                                        </div>
-                                        <p class="text-center text-amber-300 text-xs font-bold">500ml • 5.5%</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="slide1" class="carousel-slide absolute inset-0 w-full h-full flex items-center justify-center opacity-100 transition-opacity duration-700">
+                <img src="{% static 'banner_principal.jpeg' %}" alt="Cervejaria São Lourenço da Mata" class="w-full h-full object-cover">
             </div>
 
-            <!-- Slide 2: Kegs for events -->
-            <div id="slide2" class="carousel-slide absolute inset-0 w-full h-full flex items-center opacity-0 transition-opacity duration-700 pointer-events-none">
-                <div class="px-4 sm:px-6 lg:px-8 w-full py-12">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div class="space-y-5 text-center md:text-left z-10">
-                            <span class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 text-amber-400 text-xs font-bold rounded-full uppercase tracking-widest border border-amber-500/30">
-                                <i class="fa-solid fa-truck-fast"></i> Chopp para Festas e Eventos
-                            </span>
-                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-tight uppercase text-white tracking-wide">
-                                Barris de Chopp <span class="text-amber-400">10L, 20L, 30L e 50L</span>
-                            </h1>
-                            <p class="text-stone-300 text-base sm:text-lg max-w-lg">
-                                Entregamos gelado com chopeira e instalação inclusa para o seu evento em São Lourenço da Mata e Grande Recife.
-                            </p>
-                            <div class="pt-2 flex flex-wrap gap-4 justify-center md:justify-start">
-                                <a href="#barris" class="bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold px-7 py-3.5 rounded-xl transition duration-200 shadow-xl shadow-amber-500/20 uppercase text-sm tracking-wider">
-                                    Pedir Barril Agora
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex justify-center items-center">
-                            <div class="w-72 h-72 sm:w-88 sm:h-88 rounded-full bg-amber-500/10 flex items-center justify-center p-6 border border-amber-500/20">
-                                <div class="flex space-x-3 items-end">
-                                    <div class="w-20 h-36 bg-stone-800 rounded-lg border-2 border-stone-600 flex flex-col justify-center items-center shadow-lg p-2 text-center">
-                                        <i class="fa-solid fa-database text-stone-400 text-2xl mb-1"></i>
-                                        <span class="font-bold text-xs text-white">10 L</span>
-                                    </div>
-                                    <div class="w-24 h-48 bg-stone-800 rounded-lg border-2 border-amber-500/60 flex flex-col justify-center items-center shadow-xl p-2 text-center">
-                                        <i class="fa-solid fa-database text-amber-400 text-3xl mb-1"></i>
-                                        <span class="font-bold text-xs text-amber-400">30 L</span>
-                                    </div>
-                                    <div class="w-28 h-56 bg-stone-800 rounded-lg border-2 border-amber-400 flex flex-col justify-center items-center shadow-2xl p-2 text-center">
-                                        <i class="fa-solid fa-database text-amber-300 text-4xl mb-1"></i>
-                                        <span class="font-bold text-sm text-amber-300">50 L</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="slide2" class="carousel-slide absolute inset-0 w-full h-full flex items-center justify-center opacity-0 transition-opacity duration-700 pointer-events-none">
+                <img src="{% static 'banner_chopp_eventos.jpeg' %}" alt="Chopp para Eventos São Lourenço da Mata" class="w-full h-full object-cover">
             </div>
 
         </div>
 
-        <!-- Slide Controls -->
-        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-stone-900/80 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition border border-stone-700" aria-label="Anterior">
-            <i class="fa-solid fa-chevron-left text-sm"></i>
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-stone-900/80 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition border border-stone-700 shadow-xl z-20 cursor-pointer" aria-label="Anterior">
+            <i class="fa-solid fa-chevron-left text-base"></i>
         </button>
-        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-stone-900/80 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition border border-stone-700" aria-label="Próximo">
-            <i class="fa-solid fa-chevron-right text-sm"></i>
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-stone-900/80 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition border border-stone-700 shadow-xl z-20 cursor-pointer" aria-label="Próximo">
+            <i class="fa-solid fa-chevron-right text-base"></i>
         </button>
-        <!-- Slide Indicators -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-            <button onclick="goToSlide(1)" id="dot1" class="w-3 h-3 rounded-full bg-amber-500 transition-all"></button>
-            <button onclick="goToSlide(2)" id="dot2" class="w-3 h-3 rounded-full bg-stone-700 transition-all"></button>
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+            <button onclick="goToSlide(1)" id="dot1" class="w-3 h-3 rounded-full bg-amber-500 transition-all cursor-pointer"></button>
+            <button onclick="goToSlide(2)" id="dot2" class="w-3 h-3 rounded-full bg-stone-700 transition-all cursor-pointer"></button>
         </div>
     </section>
 
-    <!-- "NOSSAS CERVEJAS" Product Catalog Section -->
     <section id="cervejas" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div class="text-center mb-14">
-            <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Rotulagem Especial</span>
+          
             <h2 class="text-3xl sm:text-4xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
                 CERVEJAS ARTESANAIS EM GARRAFA
             </h2>
             <div class="w-24 h-1 bg-amber-500 mx-auto mt-3 rounded-full shadow-lg shadow-amber-500/50"></div>
-            <p class="mt-4 text-stone-400 max-w-2xl mx-auto text-sm sm:text-base">
-                Garrafas de 500ml preparadas com maltes importados, levedura especial e lúpulos selecionados.
+            
+            <p class="mt-4 text-stone-300 max-w-3xl mx-auto text-sm sm:text-base leading-relaxed">
+                 Descubra nossas cervejas em garrafa! Escolha entre as tradicionais garrafas de vidro de 600 ml, o prático PET growler de 1 litro ou nosso kit presenteável com 3 garrafas. Sabor e qualidade para todos os momentos!
             </p>
         </div>
 
-        <!-- Beer Cards Grid -->
-        <div id="beerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Dynamic Bottled Beers generated by JS -->
-        </div>
+        <div id="beerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            </div>
     </section>
 
-    <!-- "NOSSOS BARRIS" Section -->
-    <section id="barris" class="py-20 bg-stone-900/80 px-4 sm:px-6 lg:px-8 border-t border-b border-stone-800 relative">
-        <div class="max-w-7xl mx-auto">
+    <section id="barris" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-b border-stone-800 relative bg-cover bg-center bg-no-repeat" style="background-image: url('{% static 'banner_barril.jpg' %}');">
+        <div class="absolute inset-0 bg-stone-950/85 backdrop-blur-[2px]"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-14">
                 <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Para Grandes Momentos</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
                     BARRIS DE CHOPP FRESCO
                 </h2>
                 <div class="w-24 h-1 bg-amber-500 mx-auto mt-3 rounded-full shadow-lg shadow-amber-500/50"></div>
-                <p class="mt-4 text-stone-400 max-w-2xl mx-auto text-sm sm:text-base">
-                    Chopp saído direto dos tanques da fábrica! Acompanha kit de extração e suporte de atendimento.
+                
+                <p class="mt-4 text-stone-200 max-w-3xl mx-auto text-sm sm:text-base leading-relaxed">
+                     Escolha o barril ideal para o seu evento: 10, 20, 30 ou 50 litros! E para facilitar, o serviço já acompanha torneira e todo o equipamento necessário para servir seu chope. Perfeito para festas, aniversários, casamentos e muito mais!
                 </p>
             </div>
 
             <div id="kegProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Dynamic Kegs generated by JS -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- "NOSSA HISTÓRIA" Section -->
     <section id="historia" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
             <div class="relative">
-                <div class="rounded-3xl overflow-hidden border-2 border-amber-500/30 bg-stone-900 h-88 sm:h-96 relative flex items-center justify-center p-8 text-center shadow-2xl">
-                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/80 to-transparent"></div>
-                    <div class="relative z-10 space-y-4">
-                        <div class="w-20 h-20 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto border border-amber-500/40">
-                            <i class="fa-solid fa-industry text-3xl"></i>
-                        </div>
-                        <h3 class="font-display font-extrabold text-2xl text-white uppercase tracking-wider">FÁBRICA E BEER GARDEN</h3>
-                        <p class="text-stone-300 text-xs sm:text-sm max-w-md mx-auto">
-                            Localizada no coração de São Lourenço da Mata - PE. Venha conhecer nosso processo produtivo!
-                        </p>
-                        <span class="inline-block bg-amber-500 text-stone-950 font-black text-xs uppercase px-4 py-1.5 rounded-full shadow">
-                            Desde 2023 em PE
-                        </span>
-                    </div>
+                <div class="rounded-3xl overflow-hidden border-2 border-amber-500/40 bg-stone-900 shadow-2xl relative">
+                    <video controls playsinline class="w-full h-auto max-h-[500px] object-cover rounded-3xl" poster="{% static 'banner_principal.jpg' %}">
+                        <source src="{% static 'WhatsApp Video 2026-09-23 at 18.30.49.mp4' %}" type="video/mp4">
+                        Seu navegador não suporta a reprodução de vídeo.
+                    </video>
                 </div>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Tradição &amp; Qualidade</span>
+                    <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Tradição &amp; Dedicação</span>
                     <h2 class="text-3xl sm:text-4xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
-                        CONHEÇA A CERVEJARIA SÃO LOURENÇO DA MATA
+                        NOSSA HISTÓRIA
                     </h2>
                     <div class="w-20 h-1 bg-amber-500 mt-2 rounded-full"></div>
                 </div>
                 
-                <p class="text-stone-300 leading-relaxed text-sm sm:text-base">
-                    A <strong class="text-amber-400">Cervejaria São Lourenço da Mata</strong> foi criada com o objetivo de produzir cervejas puro malte de altíssimo nível no estado de Pernambuco. Unimos leveduras selecionadas, malte e água puríssima para entregar um produto de sabor único.
-                </p>
-                <p class="text-stone-300 leading-relaxed text-sm sm:text-base">
-                    Nossa fábrica conta com tecnologia moderna de fermentação e controle térmico, garantindo que o chopp chegue trincando de gelado no seu evento e com o máximo de frescor nas garrafas.
-                </p>
-
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                    <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 text-center">
-                        <span class="block text-2xl font-black text-amber-400 font-display">+100.000L</span>
-                        <span class="text-xs text-stone-400">Produzidos por ano</span>
-                    </div>
-                    <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 text-center">
-                        <span class="block text-2xl font-black text-amber-400 font-display">100% PURO MALTE</span>
-                        <span class="text-xs text-stone-400">Sem conservantes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Instagram Banner -->
-    <section class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 py-12 px-4 sm:px-6 lg:px-8 text-stone-950">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center space-x-5 text-center md:text-left">
-                <div class="w-16 h-16 rounded-2xl bg-stone-950 text-amber-400 flex items-center justify-center text-3xl shadow-xl flex-shrink-0 mx-auto md:mx-0">
-                    <i class="fa-brands fa-instagram"></i>
-                </div>
-                <div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold font-display uppercase tracking-wide leading-tight">
-                        ACOMPANHE O NOSSO INSTAGRAM!
-                    </h3>
-                    <p class="font-medium text-xs sm:text-sm text-stone-900 mt-1">
-                        Bastidores de produção, novidades e promoções exclusivas da fábrica.
+                <div class="text-stone-300 leading-relaxed text-sm sm:text-base space-y-4">
+                    <p>
+                        A cervejaria São Lourenço da Mata nasceu de uma curiosidade. Queria aprender como se faz uma cerveja. Descobri um curso, passei o dia assistindo à aula, achei interessante e muito trabalhoso. Deixei pra lá durante um ano. Mas a inquietude estava lá... eu pensava: “puxa mesmo sendo trabalhoso, vou encarar”. Então um dia fui lá e comecei a cozinhar! Gostei do processo como um todo, já do resultado... mas cervejeiro iniciante e teimoso, bebe a cerveja de qualquer jeito.
+                    </p>
+                    <p>
+                        Como o processo todo foi prazeroso, embora bastante trabalhoso, procurei descobrir quais os erros que havia cometido e comecei a estudar com mais afinco e dedicação. Daí, comecei a cozinhar/produzir com frequência, em pequena escala, sempre estudando e me aprimorando.
+                    </p>
+                    <p>
+                        Com o tempo, as cervejas que produzia foram sendo as cervejas dos eventos familiares, dos amigos até chegar ao ponto de não conseguir atender a demanda doméstica. Os pedidos eram muitos e a vida profissional não permitia uma maior dedicação à produção cervejeira. Essa foi a virada de chave... ou eu largava meu emprego (já estava na mesma empresa há 19 anos) ou entrava para o mundo cervejeiro, empreendendo e montando a minha própria cervejaria.
+                    </p>
+                    <p class="font-semibold text-amber-400">
+                        Então, em 2023, a Cervejaria São Lourenço da Mata nasceu como indústria, regularizada, pronta para entrar e se solidificar no mercado.
                     </p>
                 </div>
             </div>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-xl transition duration-200 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap">
-                @cervejariasaolourenco
-            </a>
         </div>
     </section>
 
-    <!-- "MEUS PEDIDOS" Section -->
-    <section id="meus-pedidos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-stone-800">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
-            <div>
-                <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Painel do Cliente</span>
-                <h2 class="text-3xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
-                    HISTÓRICO DE PEDIDOS
-                </h2>
-                <div class="w-20 h-1 bg-amber-500 mt-2 rounded-full"></div>
+    <section class="bg-stone-900 border-t border-b border-stone-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+            
+            <div class="rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl bg-stone-950 flex justify-center items-center">
+                <img src="{% static 'insta.jpg' %}" alt="Instagram Cervejaria São Lourenço da Mata" class="w-full max-h-[450px] object-contain sm:object-cover">
             </div>
-            <button onclick="refreshOrdersUI()" class="self-start sm:self-auto bg-stone-800 hover:bg-stone-700 text-stone-300 px-4 py-2 rounded-xl text-xs font-bold border border-stone-700 flex items-center space-x-2">
-                <i class="fa-solid fa-arrows-rotate"></i>
-                <span>Atualizar Pedidos</span>
-            </button>
-        </div>
 
-        <!-- Orders Table / List Container -->
-        <div id="ordersContainer" class="space-y-4">
-            <!-- Dynamic User Orders Rendered Here -->
+            <div class="flex flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 rounded-2xl gap-4 shadow-xl text-stone-950">
+                <div class="flex items-center space-x-4 text-center sm:text-left">
+                    <i class="fa-brands fa-instagram text-4xl"></i>
+                    <div>
+                        <h3 class="font-display font-extrabold text-2xl uppercase tracking-wide leading-tight">Siga no Instagram</h3>
+                        <p class="text-xs font-semibold">Acompanhe novidades, bastidores e promoções exclusivas da fábrica!</p>
+                    </div>
+                </div>
+                <a href="https://instagram.com/cerveja.saolourenco" target="_blank" rel="noopener noreferrer" class="bg-stone-950 hover:bg-stone-900 text-amber-400 font-extrabold px-8 py-3.5 rounded-xl transition duration-200 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                    @cerveja.saolourenco
+                </a>
+            </div>
+
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contato" class="py-20 bg-stone-900/60 px-4 sm:px-6 lg:px-8 border-t border-stone-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Atendimento ao Cliente</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold font-display uppercase tracking-wider text-white mt-1">
-                    FALE COM A NOSSA EQUIPE
-                </h2>
-                <div class="w-24 h-1 bg-amber-500 mx-auto mt-3 rounded-full"></div>
-            </div>
-
+    <section id="contato" class="py-16 bg-stone-950 px-4 sm:px-6 lg:px-8 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto space-y-12">
+            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Info Card -->
                 <div class="bg-stone-900 border border-stone-800 p-8 rounded-2xl shadow-xl space-y-6">
                     <h3 class="text-xl font-bold font-display text-amber-400 uppercase tracking-wider">Cervejaria São Lourenço</h3>
                     <div class="space-y-4 text-sm text-stone-300">
@@ -432,27 +310,27 @@
                             <i class="fa-solid fa-location-dot text-amber-400 text-lg mt-1"></i>
                             <div>
                                 <p class="font-bold text-white">Endereço da Fábrica:</p>
-                                <p class="text-xs text-stone-400">Av. Dr. Francisco Correia, 500 - Centro, São Lourenço da Mata - PE</p>
+                                <p class="text-xs text-stone-400">Rua Brasil, S/N, Chã de Tábua, São Lourenço - PE</p>
+                                <p class="text-xs text-stone-400">CEP: 54.745-840</p>
                             </div>
                         </div>
                         <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-phone text-amber-400 text-lg mt-1"></i>
+                            <i class="fa-brands fa-whatsapp text-amber-400 text-lg mt-1"></i>
                             <div>
-                                <p class="font-bold text-white">Central de Vendas / WhatsApp:</p>
-                                <p class="text-xs text-stone-400">(81) 99876-5432</p>
+                                <p class="font-bold text-white">Atendimento / WhatsApp:</p>
+                                <a href="https://wa.me/5581998765432" target="_blank" class="text-xs text-amber-400 hover:underline">(81) 99876-5432</a>
                             </div>
                         </div>
                         <div class="flex items-start space-x-3">
                             <i class="fa-solid fa-envelope text-amber-400 text-lg mt-1"></i>
                             <div>
                                 <p class="font-bold text-white">E-mail Comercial:</p>
-                                <p class="text-xs text-stone-400">pedidos@cervejariasaoulourenco.com.br</p>
+                                <p class="text-xs text-stone-400">cerveja.saolourenco@gmail.com</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Form Card -->
                 <div class="lg:col-span-2 bg-stone-900 border border-stone-800 p-8 rounded-2xl shadow-xl">
                     <form onsubmit="handleContactSubmit(event)" class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -475,1134 +353,268 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Mensagem</label>
-                            <textarea rows="3" required placeholder="Escreva sua mensagem..." class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm"></textarea>
+                            <textarea rows="4" required placeholder="Digite sua mensagem aqui..." class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 rounded-xl transition duration-200 uppercase text-sm tracking-wider">
+                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 px-6 rounded-xl transition duration-200 uppercase tracking-wider text-sm shadow-lg shadow-amber-500/20 cursor-pointer">
                             Enviar Mensagem
                         </button>
                     </form>
                 </div>
             </div>
+
+            <div class="text-center pt-8 border-t border-stone-800 text-stone-400 text-xs sm:text-sm font-semibold tracking-wide">
+                <p class="text-amber-400 uppercase font-bold mb-1">🔞 Beba com moderação.</p>
+                <p>Não compartilhe este conteúdo com menores de idade.</p>
+                <p class="text-[11px] text-stone-500 mt-3">© 2026 Cervejaria São Lourenço da Mata. Todos os direitos reservados.</p>
+            </div>
+
         </div>
     </section>
 
-    <!-- Legal Footer -->
-    <footer class="bg-stone-950 border-t border-stone-800 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-stone-800">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-stone-950 font-bold">
-                        <i class="fa-solid fa-beer-mug-empty"></i>
-                    </div>
-                    <div>
-                        <span class="font-display font-bold text-lg text-white uppercase tracking-wide block leading-none">Cervejaria São Lourenço da Mata</span>
-                        <span class="text-[10px] text-amber-400 font-semibold">Cerveja Artesanal de Qualidade</span>
-                    </div>
-                </div>
-
-                <div class="text-xs text-stone-400 text-center md:text-right space-y-1">
-                    <p>Fábrica: São Lourenço da Mata - Pernambuco</p>
-                    <p>Atendimento: Segunda a Sábado das 08h às 20h</p>
-                </div>
-            </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-between text-xs text-stone-500 gap-4">
-                <p>&copy; 2026 Cervejaria São Lourenço da Mata. Todos os direitos reservados.</p>
-                <div class="px-3 py-1.5 bg-amber-500/10 rounded-lg border border-amber-500/30 text-amber-400 font-semibold text-center text-[11px]">
-                    <i class="fa-solid fa-triangle-exclamation mr-1"></i>
-                    APRECIE COM MODERAÇÃO. VENDA E CONSUMO PROIBIDOS PARA MENORES DE 18 ANOS.
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- SLIDE-OVER CART DRAWER -->
     <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="toggleCartDrawer()"></div>
         <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-stone-900 border-l border-stone-800 shadow-2xl flex flex-col justify-between">
-                
-                <!-- Drawer Header -->
-                <div class="p-6 bg-stone-950 border-b border-stone-800 flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-cart-shopping text-amber-400 text-xl"></i>
-                        <h3 class="font-display font-extrabold text-xl uppercase tracking-wider text-white">Meu Carrinho</h3>
+            <div class="w-screen max-w-md bg-stone-900 border-l border-stone-800 shadow-2xl flex flex-col justify-between p-6">
+                <div>
+                    <div class="flex items-center justify-between pb-4 border-b border-stone-800">
+                        <h2 class="text-xl font-bold font-display uppercase tracking-wider text-white">Sua Sacola</h2>
+                        <button onclick="toggleCartDrawer()" class="text-stone-400 hover:text-white p-2 cursor-pointer">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </button>
                     </div>
-                    <button onclick="toggleCartDrawer()" class="text-stone-400 hover:text-white p-2">
-                        <i class="fa-solid fa-xmark text-2xl"></i>
-                    </button>
+                    <div id="cartItemsList" class="py-4 space-y-3 max-h-[60vh] overflow-y-auto">
+                        <p class="text-stone-500 text-center py-8 text-sm">Sua sacola está vazia.</p>
+                    </div>
                 </div>
-
-                <!-- Items Container -->
-                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
-                    <!-- Dynamic Cart Content JS -->
-                </div>
-
-                <!-- Drawer Footer -->
-                <div class="p-6 bg-stone-950 border-t border-stone-800 space-y-4">
-                    <div class="flex justify-between items-center text-lg font-bold text-white">
+                <div class="border-t border-stone-800 pt-4 space-y-4">
+                    <div class="flex justify-between text-lg font-bold">
                         <span>Total:</span>
-                        <span id="cartTotal" class="text-2xl text-amber-400 font-extrabold">R$ 0,00</span>
+                        <span id="cartTotalValue" class="text-amber-400">R$ 0,00</span>
                     </div>
-                    
-                    <button onclick="proceedToCheckout()" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-4 rounded-xl transition duration-200 shadow-xl shadow-amber-500/20 flex items-center justify-center space-x-2 uppercase text-sm tracking-wider">
-                        <span>Avançar para Checkout</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <button onclick="checkoutCart()" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 rounded-xl uppercase text-sm tracking-wider cursor-pointer">
+                        Finalizar Pedido no WhatsApp
                     </button>
                 </div>
-
             </div>
         </div>
-    </div>
-
-    <!-- AUTHENTICATION MODAL (LOGIN / REGISTER) -->
-    <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 hidden">
-        <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative overflow-y-auto max-h-[90vh]">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-stone-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
-            <!-- Tabs -->
-            <div class="flex border-b border-stone-800 mb-6">
-                <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 uppercase tracking-wider">
-                    Entrar
-                </button>
-                <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 py-3 text-sm font-bold text-stone-400 border-b-2 border-transparent hover:text-stone-200 uppercase tracking-wider">
-                    Criar Cadastro
-                </button>
-            </div>
-
-            <!-- LOGIN FORM -->
-            <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-                <div id="authNoticeMessage" class="hidden p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-400 text-xs">
-                    Faça login ou cadastre-se para continuar o fechamento do seu pedido.
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-stone-400 uppercase mb-1">E-mail</label>
-                    <input type="email" id="loginEmail" required placeholder="seu@email.com" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Senha</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                </div>
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 rounded-xl transition duration-200 uppercase text-sm tracking-wider">
-                    Entrar na Conta
-                </button>
-                <p class="text-xs text-center text-stone-500">
-                    Ainda não tem conta? <a href="#" onclick="switchAuthTab('register')" class="text-amber-400 underline">Cadastre-se aqui</a>
-                </p>
-            </form>
-
-            <!-- REGISTER FORM -->
-            <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="space-y-4 hidden">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Nome Completo</label>
-                        <input type="text" id="regName" required placeholder="Ex: Maria das Dores" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">E-mail</label>
-                        <input type="email" id="regEmail" required placeholder="maria@email.com" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Telefone / WhatsApp</label>
-                        <input type="tel" id="regPhone" required placeholder="(81) 98888-7777" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">CPF</label>
-                        <input type="text" id="regCpf" required placeholder="000.000.000-00" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">CEP</label>
-                        <input type="text" id="regCep" required placeholder="54735-000" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Endereço de Entrega (Rua, Número, Bairro)</label>
-                        <input type="text" id="regAddress" required placeholder="Rua Real, 120, Centro, São Lourenço da Mata" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Senha</label>
-                        <input type="password" id="regPassword" required placeholder="Crie uma senha" class="w-full px-4 py-2.5 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3 rounded-xl transition duration-200 uppercase text-sm tracking-wider mt-2">
-                    Concluir Cadastro
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- CHECKOUT MODAL -->
-    <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 hidden">
-        <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative overflow-y-auto max-h-[95vh]">
-            
-            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-stone-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
-            <!-- Checkout Steps Header -->
-            <div class="mb-6">
-                <span class="text-amber-400 font-extrabold uppercase text-xs tracking-widest">Fechamento do Pedido</span>
-                <h3 class="text-2xl font-extrabold font-display text-white uppercase tracking-wider">Checkout Seguro</h3>
-                <div class="flex items-center space-x-2 mt-3 text-xs">
-                    <div id="step1Indicator" class="flex-1 bg-amber-500 h-1.5 rounded-full"></div>
-                    <div id="step2Indicator" class="flex-1 bg-stone-800 h-1.5 rounded-full"></div>
-                </div>
-            </div>
-
-            <!-- STEP 1: Address Confirmation & Summary -->
-            <div id="checkoutStep1" class="space-y-6">
-                <div class="bg-stone-950 p-4 rounded-xl border border-stone-800">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-amber-400 uppercase">Endereço de Entrega Cadastrado</span>
-                        <i class="fa-solid fa-truck-ramp-box text-amber-400"></i>
-                    </div>
-                    <p id="checkoutAddressDisplay" class="text-sm font-semibold text-white"></p>
-                    <p id="checkoutUserDisplay" class="text-xs text-stone-400 mt-1"></p>
-                </div>
-
-                <!-- Order items summary list -->
-                <div>
-                    <h4 class="text-xs font-bold text-stone-400 uppercase mb-3">Resumo dos Itens</h4>
-                    <div id="checkoutSummaryList" class="max-h-40 overflow-y-auto space-y-2 pr-2">
-                        <!-- Dynamic Checkout Items -->
-                    </div>
-                </div>
-
-                <div class="bg-stone-950 p-4 rounded-xl border border-stone-800 flex justify-between items-center text-lg font-bold">
-                    <span class="text-stone-300">Total a Pagar:</span>
-                    <span id="checkoutTotalDisplay" class="text-2xl text-amber-400 font-extrabold">R$ 0,00</span>
-                </div>
-
-                <button onclick="goToCheckoutStep(2)" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-4 rounded-xl transition duration-200 uppercase text-sm tracking-wider flex items-center justify-center space-x-2">
-                    <span>Escolher Forma de Pagamento</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </div>
-
-            <!-- STEP 2: Payment Selection (PIX / Credit Card) -->
-            <div id="checkoutStep2" class="space-y-6 hidden">
-                
-                <!-- Payment Options Tabs -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="selectPaymentMethod('pix')" id="payTabPix" class="p-4 rounded-xl border-2 border-amber-500 bg-amber-500/10 text-white font-bold text-sm flex items-center justify-center space-x-2">
-                        <i class="fa-brands fa-pix text-amber-400 text-xl"></i>
-                        <span>Pagamento PIX</span>
-                    </button>
-                    <button onclick="selectPaymentMethod('card')" id="payTabCard" class="p-4 rounded-xl border-2 border-stone-800 bg-stone-950 text-stone-400 font-bold text-sm flex items-center justify-center space-x-2 hover:border-stone-700">
-                        <i class="fa-solid fa-credit-card text-xl"></i>
-                        <span>Cartão de Crédito</span>
-                    </button>
-                </div>
-
-                <!-- PIX PAYMENT VIEW -->
-                <div id="pixPaymentSection" class="bg-stone-950 p-6 rounded-2xl border border-stone-800 text-center space-y-4">
-                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full">
-                        <i class="fa-solid fa-clock mr-1"></i> Desconto &amp; Liberação Imediata
-                    </span>
-                    
-                    <div class="flex flex-col items-center justify-center space-y-3 py-2">
-                        <!-- Simulated QR Code SVG Graphic -->
-                        <div class="w-48 h-48 bg-white p-3 rounded-2xl border-4 border-amber-500 shadow-xl flex items-center justify-center">
-                            <img id="pixQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014br.gov.bcb.pix0136cervejariasaoulourenco%40pix.com.br5204000053039865802BR5925CERVEJARIA%20SAO%20LOURENCO6009SAO%20LOURENCO62070503***6304E2CA" alt="PIX QR Code" class="w-full h-full object-contain">
-                        </div>
-                        <p class="text-xs text-stone-400">Escaneie o QR Code com o app do seu banco ou copie a chave abaixo.</p>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold text-stone-400 uppercase">Chave PIX (Copia e Cola)</label>
-                        <div class="flex items-center space-x-2">
-                            <input type="text" readonly id="pixPayloadInput" value="00020126580014br.gov.bcb.pix0136cervejariasaoulourenco@pix.com.br520400005303986" class="w-full px-3 py-2.5 bg-stone-900 border border-stone-800 rounded-xl text-xs font-mono text-amber-400">
-                            <button onclick="copyPixKey()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold rounded-xl text-xs whitespace-nowrap">
-                                <i class="fa-regular fa-copy mr-1"></i> Copiar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="pt-3 border-t border-stone-800">
-                        <button onclick="confirmPixPaymentSimulated()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-stone-950 font-extrabold py-3.5 rounded-xl transition duration-200 uppercase text-sm tracking-wider flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-paper-plane text-base"></i>
-                            <span>Confirmar Pagamento PIX / Enviar Comprovante</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CREDIT CARD PAYMENT VIEW -->
-                <div id="cardPaymentSection" class="space-y-5 hidden">
-                    <!-- Interactive Card Preview -->
-                    <div class="card-visual rounded-2xl p-6 text-white border border-amber-500/30 relative overflow-hidden space-y-6">
-                        <div class="flex justify-between items-center">
-                            <i class="fa-solid fa-sim-card text-3xl text-amber-300"></i>
-                            <i class="fa-brands fa-cc-visa text-3xl font-bold italic"></i>
-                        </div>
-                        <div>
-                            <span class="block text-xs text-amber-200/80 uppercase font-mono tracking-widest">Número do Cartão</span>
-                            <span id="cardPreviewNumber" class="text-xl font-mono tracking-widest font-bold">•••• •••• •••• ••••</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <div>
-                                <span class="block text-[10px] text-amber-200/80 uppercase">Nome</span>
-                                <span id="cardPreviewName" class="font-bold uppercase">NOME DO TITULAR</span>
-                            </div>
-                            <div>
-                                <span class="block text-[10px] text-amber-200/80 uppercase">Validade</span>
-                                <span id="cardPreviewExpiry" class="font-bold">MM/AA</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card Form -->
-                    <form onsubmit="handleCreditCardPayment(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Número do Cartão</label>
-                            <input type="text" id="cardNumberInput" oninput="updateCardPreview()" required placeholder="0000 0000 0000 0000" maxlength="19" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Nome Impresso no Cartão</label>
-                            <input type="text" id="cardNameInput" oninput="updateCardPreview()" required placeholder="NOME COMO NO CARTÃO" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm uppercase">
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Validade (MM/AA)</label>
-                                <input type="text" id="cardExpiryInput" oninput="updateCardPreview()" required placeholder="12/28" maxlength="5" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-stone-400 uppercase mb-1">CVV</label>
-                                <input type="password" id="cardCvvInput" required placeholder="123" maxlength="4" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-stone-400 uppercase mb-1">Parcelamento</label>
-                            <select id="cardInstallmentsSelect" class="w-full px-4 py-3 rounded-xl bg-stone-950 border border-stone-800 text-white focus:outline-none focus:border-amber-500 text-sm">
-                                <!-- Dynamic options JS -->
-                            </select>
-                        </div>
-
-                        <button type="submit" id="payCardSubmitBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-4 rounded-xl transition duration-200 uppercase text-sm tracking-wider flex items-center justify-center space-x-2 mt-4">
-                            <i class="fa-solid fa-lock text-xs"></i>
-                            <span id="payCardBtnText">Pagar Agora via Cartão</span>
-                        </button>
-                    </form>
-                </div>
-
-                <div class="flex justify-between items-center">
-                    <button onclick="goToCheckoutStep(1)" class="text-xs text-stone-400 hover:text-white flex items-center gap-1">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar para resumo
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- SUCCESS ORDER MODAL -->
-    <div id="successOrderModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 hidden">
-        <div class="bg-stone-900 border-2 border-emerald-500 rounded-2xl max-w-lg w-full p-8 text-center shadow-2xl space-y-5">
-            <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto border-2 border-emerald-500 text-4xl">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            
-            <h3 class="text-2xl font-extrabold font-display uppercase tracking-wider text-white">PEDIDO CONCLUÍDO COM SUCESSO!</h3>
-            
-            <div id="successModalMessage" class="text-sm text-stone-300 leading-relaxed bg-stone-950 p-4 rounded-xl border border-stone-800">
-                <!-- Message injected by JS -->
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-3 pt-2">
-                <button onclick="closeSuccessModalAndOpenInbox()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3.5 px-4 rounded-xl transition duration-200 text-xs uppercase tracking-wider">
-                    <i class="fa-solid fa-envelope mr-1"></i> Ver E-mails Simulados
-                </button>
-                <button onclick="closeSuccessModalAndOpenOrders()" class="flex-1 bg-stone-800 hover:bg-stone-700 text-white font-bold py-3.5 px-4 rounded-xl border border-stone-700 transition duration-200 text-xs">
-                    Ir para 'Meus Pedidos'
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- SIMULATED EMAIL INBOX MODAL -->
-    <div id="emailInboxModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 hidden">
-        <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative flex flex-col max-h-[90vh]">
-            
-            <div class="flex items-center justify-between pb-4 border-b border-stone-800">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-inbox"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-display font-extrabold text-xl uppercase tracking-wider text-white">Notificações por E-mail (Simulador)</h3>
-                        <p class="text-xs text-stone-400">Histórico das confirmações enviadas para o cliente e para a Cervejaria São Lourenço.</p>
-                    </div>
-                </div>
-                <button onclick="toggleEmailInboxModal()" class="text-stone-400 hover:text-white">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <div id="emailInboxList" class="flex-1 overflow-y-auto my-4 space-y-4 pr-2">
-                <!-- Dynamic Emails injected here -->
-            </div>
-
-            <div class="pt-3 border-t border-stone-800 flex justify-end">
-                <button onclick="toggleEmailInboxModal()" class="bg-stone-800 hover:bg-stone-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold">
-                    Fechar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION CONTAINER -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-stone-900 border-2 border-amber-500 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-amber-400 text-xl"></i>
-        <span id="toastMessage" class="text-xs font-bold">Notificação</span>
     </div>
 
     <script>
-        // Global Application State
-        let currentUser = null; // null if guest, or user object when logged in
-        let cart = [];
-        let ordersHistory = [];
-        let simulatedEmails = [];
-        let currentSlide = 1;
-        let selectedPaymentMethod = 'pix'; // 'pix' or 'card'
-
-        // Product Catalog Data
-        const beerProducts = [
-            {
-                id: 'b1',
-                title: 'BLOND ALE PURO MALTE',
-                volume: '500ml',
-                abv: '4.8% ABV',
-                ibu: '18 IBU',
-                price: 16.90,
-                category: 'Garrafa 500ml',
-                desc: 'Refrescante, levemente maltada e dourada com notas florais suaves.',
-                badge: 'Refrescante'
-            },
-            {
-                id: 'b2',
-                title: 'AMERICAN PALE ALE (APA)',
-                volume: '500ml',
-                abv: '5.5% ABV',
-                ibu: '35 IBU',
-                price: 18.90,
-                category: 'Garrafa 500ml',
-                desc: 'Aromas cítricos marcantes vindos de lúpulos americanos selecionados.',
-                badge: 'Mais Vendida'
-            },
-            {
-                id: 'b3',
-                title: 'INDIA PALE ALE (IPA)',
-                volume: '500ml',
-                abv: '6.5% ABV',
-                ibu: '55 IBU',
-                price: 21.90,
-                category: 'Garrafa 500ml',
-                desc: 'Lupulada, intensa e frutada com dry-hopping generoso.',
-                badge: 'Intensa'
-            },
-            {
-                id: 'b4',
-                title: 'IRISH DRY STOUT',
-                volume: '500ml',
-                abv: '5.0% ABV',
-                ibu: '28 IBU',
-                price: 19.90,
-                category: 'Garrafa 500ml',
-                desc: 'Cerveja escura com notas marcantes de café torrado e chocolate amargo.',
-                badge: 'Edição Especial'
-            }
-        ];
-
-        const kegProducts = [
-            {
-                id: 'k1',
-                title: 'BARRIL DE CHOPP - 10 LITROS',
-                volume: '10 L',
-                yield: 'Aprox. 30 copos de 300ml',
-                price: 180.00,
-                category: 'Barril Chopp',
-                badge: 'Ideal p/ Reuniões'
-            },
-            {
-                id: 'k2',
-                title: 'BARRIL DE CHOPP - 20 LITROS',
-                volume: '20 L',
-                yield: 'Aprox. 65 copos de 300ml',
-                price: 320.00,
-                category: 'Barril Chopp',
-                badge: 'Churrascos'
-            },
-            {
-                id: 'k3',
-                title: 'BARRIL DE CHOPP - 30 LITROS',
-                volume: '30 L',
-                yield: 'Aprox. 100 copos de 300ml',
-                price: 450.00,
-                category: 'Barril Chopp',
-                badge: 'Mais Pedido'
-            },
-            {
-                id: 'k4',
-                title: 'BARRIL DE CHOPP - 50 LITROS',
-                volume: '50 L',
-                yield: 'Aprox. 165 copos de 300ml',
-                price: 700.00,
-                category: 'Barril Chopp',
-                badge: 'Grandes Eventos'
-            }
-        ];
-
-        window.onload = function() {
-            renderCatalog();
-            updateUserUI();
-            updateCartUI();
-            renderOrdersUI();
-            renderEmailInboxUI();
-
-            // Auto slide carousel interval
-            setInterval(() => {
-                nextSlide();
-            }, 6000);
-        };
-
-        // Carousel Logic
-        function goToSlide(slideNum) {
-            currentSlide = slideNum;
-            const slide1 = document.getElementById('slide1');
-            const slide2 = document.getElementById('slide2');
-            const dot1 = document.getElementById('dot1');
-            const dot2 = document.getElementById('dot2');
-
-            if (slideNum === 1) {
-                slide1.classList.remove('opacity-0', 'pointer-events-none');
-                slide1.classList.add('opacity-100');
-                slide2.classList.remove('opacity-100');
-                slide2.classList.add('opacity-0', 'pointer-events-none');
-                
-                dot1.classList.replace('bg-stone-700', 'bg-amber-500');
-                dot2.classList.replace('bg-amber-500', 'bg-stone-700');
+        // --- 1. MODO CLARO / ESCURO (THEME TOGGLE) ---
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById("themeIcon");
+            body.classList.toggle("light-mode");
+            
+            if (body.classList.contains("light-mode")) {
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
             } else {
-                slide2.classList.remove('opacity-0', 'pointer-events-none');
-                slide2.classList.add('opacity-100');
-                slide1.classList.remove('opacity-100');
-                slide1.classList.add('opacity-0', 'pointer-events-none');
-
-                dot2.classList.replace('bg-stone-700', 'bg-amber-500');
-                dot1.classList.replace('bg-amber-500', 'bg-stone-700');
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
             }
         }
 
-        function nextSlide() {
-            goToSlide(currentSlide === 1 ? 2 : 1);
-        }
-
-        function prevSlide() {
-            goToSlide(currentSlide === 1 ? 2 : 1);
-        }
+        // --- 2. VERIFICAÇÃO DE IDADE (+18) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const isAgeVerified = localStorage.getItem("ageVerified");
+            const ageModal = document.getElementById("ageModal");
+            if (isAgeVerified === "true" && ageModal) {
+                ageModal.style.display = "none";
+            }
+            renderProducts();
+        });
 
         function confirmAge(isAdult) {
-            const modal = document.getElementById('ageModal');
+            const ageModal = document.getElementById("ageModal");
             if (isAdult) {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 300);
+                localStorage.setItem("ageVerified", "true");
+                if (ageModal) {
+                    ageModal.style.display = "none";
+                }
             } else {
+                alert("Você precisa ter 18 anos ou mais para acessar o site da cervejaria.");
                 window.location.href = "https://www.google.com";
             }
         }
 
-        function renderCatalog() {
-            // Render Bottled Beers
-            const beerGrid = document.getElementById('beerProductsGrid');
-            beerGrid.innerHTML = beerProducts.map(beer => `
-                <div class="bg-stone-900 rounded-2xl overflow-hidden border border-stone-800 shadow-xl hover:border-amber-500/50 transition duration-300 flex flex-col justify-between group">
-                    <div class="bg-stone-950 p-6 flex justify-center items-center relative overflow-hidden">
-                        <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full border border-amber-500/30">
-                            ${beer.badge}
-                        </span>
-                        <div class="w-32 h-56 bg-stone-900 rounded-xl border-2 border-amber-500/40 p-3 flex flex-col justify-between group-hover:scale-105 transition duration-300 shadow-xl">
-                            <div class="w-7 h-7 bg-amber-500 rounded-full mx-auto flex items-center justify-center text-stone-950 text-[10px] font-black">500</div>
-                            <div class="bg-amber-500/10 p-2 rounded text-center border border-amber-500/20">
-                                <p class="text-[9px] font-bold text-amber-400 uppercase">São Lourenço</p>
-                                <p class="font-display font-bold text-xs text-white">${beer.title}</p>
-                            </div>
-                            <p class="text-center text-amber-400 text-[10px] font-bold">${beer.abv}</p>
+        // --- 3. MENU MOBILE ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobileMenu");
+            if (menu) {
+                menu.classList.toggle("hidden");
+            }
+        }
+
+        // --- 4. SLIDER DE BANNERS ---
+        let currentSlide = 1;
+        function showSlide(index) {
+            const slide1 = document.getElementById("slide1");
+            const slide2 = document.getElementById("slide2");
+            const dot1 = document.getElementById("dot1");
+            const dot2 = document.getElementById("dot2");
+
+            if (!slide1 || !slide2) return;
+
+            if (index === 1) {
+                slide1.classList.remove("opacity-0", "pointer-events-none");
+                slide1.classList.add("opacity-100");
+                slide2.classList.remove("opacity-100");
+                slide2.classList.add("opacity-0", "pointer-events-none");
+                if (dot1) dot1.className = "w-3 h-3 rounded-full bg-amber-500 transition-all cursor-pointer";
+                if (dot2) dot2.className = "w-3 h-3 rounded-full bg-stone-700 transition-all cursor-pointer";
+                currentSlide = 1;
+            } else {
+                slide2.classList.remove("opacity-0", "pointer-events-none");
+                slide2.classList.add("opacity-100");
+                slide1.classList.remove("opacity-100");
+                slide1.classList.add("opacity-0", "pointer-events-none");
+                if (dot2) dot2.className = "w-3 h-3 rounded-full bg-amber-500 transition-all cursor-pointer";
+                if (dot1) dot1.className = "w-3 h-3 rounded-full bg-stone-700 transition-all cursor-pointer";
+                currentSlide = 2;
+            }
+        }
+
+        function nextSlide() { showSlide(currentSlide === 1 ? 2 : 1); }
+        function prevSlide() { showSlide(currentSlide === 1 ? 2 : 1); }
+        function goToSlide(n) { showSlide(n); }
+
+        setInterval(() => { nextSlide(); }, 6000);
+
+        // --- 5. RENDERIZAÇÃO DE PRODUTOS (5 CERVEJAS) ---
+        const beers = [
+            { id: 1, name: "Blonde Ale", style: "Garrafa Vidro", vol: "600ml", price: 14.00, img: "{% static 'banner_garrafa.jpg' %}" },
+            { id: 2, name: "American Pale Ale", style: "Garrafa Vidro", vol: "600ml", price: 16.00, img: "{% static 'banner_garrafa.jpg' %}" },
+            { id: 3, name: "Growler PET American Pale Ale", style: "Garrafa PET", vol: "1 Litro", price: 16.00, img: "{% static 'banner_garrafa.jpg' %}" },
+            { id: 4, name: "Growler PET Blonde Ale", style: "Garrafa PET", vol: "1 Litro", price: 14.00, img: "{% static 'banner_garrafa.jpg' %}" },
+            { id: 5, name: "Kit Personalizado Presenteável", style: "Kit 3 Garrafas", vol: "Caixa Presente", price: 60.00, img: "{% static 'caixa_banner.jpeg' %}" }
+        ];
+
+        const kegs = [
+            { id: 101, name: "Chopp Barril Blonde Ale 10L", style: "", vol: "10 Litros", price: 120.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 102, name: "Chopp Barril Blonde Ale 20L", style: "", vol: "20 Litros", price: 240.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 103, name: "Chopp Barril Blonde Ale 30L", style: "", vol: "30 Litros", price: 360.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 104, name: "Chopp Barril Blonde Ale 50L", style: "", vol: "50 Litros", price: 600.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 105, name: "Chopp Barril American Pale Ale 10L", style: "", vol: "10 Litros", price: 140.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 106, name: "Chopp Barril American Pale Ale 20L", style: "", vol: "20 Litros", price: 280.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 107, name: "Chopp Barril American Pale Ale 30L", style: "", vol: "30 Litros", price: 420.00, img: "{% static 'banner_barril.jpg' %}" },
+            { id: 108, name: "Chopp Barril American Pale Ale 50L", style: "", vol: "50 Litros", price: 700.00, img: "{% static 'banner_barril.jpg' %}" }
+        ];
+
+        function renderProducts() {
+            const beerGrid = document.getElementById("beerProductsGrid");
+            const kegGrid = document.getElementById("kegProductsGrid");
+
+            if (beerGrid) {
+                beerGrid.innerHTML = beers.map(item => `
+                    <div class="bg-stone-900 border border-stone-800 rounded-2xl p-4 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between shadow-xl">
+                        <div class="h-44 bg-stone-950 rounded-xl mb-3 overflow-hidden flex items-center justify-center">
+                            <img src="${item.img}" alt="${item.name}" class="h-full object-cover">
                         </div>
-                    </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div>
-                            <div class="flex justify-between items-start mb-1">
-                                <h3 class="text-base font-bold text-white font-display uppercase tracking-wider">${beer.title}</h3>
-                            </div>
-                            <p class="text-xs text-stone-400 leading-relaxed">${beer.desc}</p>
-                            <div class="flex items-center gap-2 mt-2 text-[11px] font-semibold text-amber-400">
-                                <span>${beer.volume}</span> • <span>${beer.ibu}</span>
-                            </div>
+                            <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">${item.style} • ${item.vol}</span>
+                            <h3 class="font-bold text-base text-white font-display mt-0.5 leading-tight">${item.name}</h3>
                         </div>
-                        <div class="pt-2 border-t border-stone-800/80 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-stone-500 block uppercase font-bold">Preço</span>
-                                <span class="text-xl font-extrabold text-white">R$ ${beer.price.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                            <button onclick="addToCart('${beer.id}', 'beer')" class="bg-amber-500 hover:bg-amber-600 text-stone-950 px-4 py-2.5 rounded-xl font-extrabold text-xs transition shadow-lg shadow-amber-500/10 flex items-center space-x-1.5">
-                                <i class="fa-solid fa-plus text-[10px]"></i>
-                                <span>Comprar</span>
+                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-stone-800">
+                            <span class="text-lg font-extrabold text-amber-400">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                            <button onclick="addToCart('${item.name}', ${item.price})" class="bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold px-3 py-1.5 rounded-lg text-[11px] uppercase tracking-wider transition cursor-pointer">
+                                Adicionar
                             </button>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
 
-            // Render Kegs
-            const kegGrid = document.getElementById('kegProductsGrid');
-            kegGrid.innerHTML = kegProducts.map(keg => `
-                <div class="bg-stone-900 rounded-2xl p-6 border border-stone-800 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between text-center group">
-                    <div>
-                        <span class="inline-block bg-amber-500/10 text-amber-400 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full border border-amber-500/30 mb-3">
-                            ${keg.badge}
-                        </span>
-                        <div class="w-20 h-28 bg-stone-950 rounded-xl mx-auto mb-4 flex flex-col items-center justify-center border border-stone-800 group-hover:border-amber-500/50 transition duration-300">
-                            <i class="fa-solid fa-database text-amber-400 text-3xl mb-1"></i>
-                            <span class="text-xs font-bold text-white">${keg.volume}</span>
+            if (kegGrid) {
+                kegGrid.innerHTML = kegs.map(item => `
+                    <div class="bg-stone-900/90 border border-stone-800 rounded-2xl p-5 hover:border-amber-500/50 transition duration-300 flex flex-col justify-between shadow-xl backdrop-blur-sm">
+                        <div class="h-48 bg-stone-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                            <img src="${item.img}" alt="${item.name}" class="h-full object-cover">
                         </div>
-                        <h3 class="text-lg font-bold font-display text-white uppercase tracking-wider">${keg.title}</h3>
-                        <p class="text-xs text-stone-400 mt-1 mb-3">${keg.yield}</p>
-                        <p class="text-2xl font-black text-amber-400 mb-4">R$ ${keg.price.toFixed(2).replace('.', ',')}</p>
+                        <div>
+                            <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">${item.style} • ${item.vol}</span>
+                            <h3 class="font-bold text-lg text-white font-display mt-0.5">${item.name}</h3>
+                            <p class="text-[11px] text-stone-400 mt-1">Acompanha torneira e kit completo</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-5 pt-3 border-t border-stone-800">
+                            <span class="text-xl font-extrabold text-amber-400">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                            <button onclick="addToCart('${item.name}', ${item.price})" class="bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
+                                Reservar
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="addToCart('${keg.id}', 'keg')" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-extrabold py-3 rounded-xl transition duration-200 uppercase text-xs tracking-wider flex items-center justify-center space-x-1.5">
-                        <i class="fa-solid fa-cart-plus text-xs"></i>
-                        <span>Adicionar Barril</span>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function updateUserUI() {
-            const container = document.getElementById('userAuthContainer');
-            if (currentUser) {
-                container.innerHTML = `
-                    <div class="flex items-center space-x-2 bg-stone-800/80 hover:bg-stone-800 px-3 py-1.5 rounded-xl border border-stone-700">
-                        <div class="w-7 h-7 bg-amber-500 rounded-lg flex items-center justify-center text-stone-950 font-bold text-xs">
-                            ${currentUser.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div class="hidden lg:flex flex-col text-left">
-                            <span class="text-xs font-bold text-white leading-none">${currentUser.name.split(' ')[0]}</span>
-                            <span class="text-[9px] text-amber-400">Cliente Logado</span>
-                        </div>
-                        <button onclick="logoutUser()" class="text-stone-400 hover:text-amber-400 text-xs ml-1" title="Sair">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <button onclick="openAuthModal()" class="bg-stone-800 hover:bg-stone-700 text-amber-400 px-3.5 py-2 rounded-xl text-xs font-bold border border-stone-700 transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-user text-xs"></i>
-                        <span>Entrar / Cadastrar</span>
-                    </button>
-                `;
+                `).join('');
             }
         }
 
-        function openAuthModal(notice = false) {
-            document.getElementById('authModal').classList.remove('hidden');
-            const noticeEl = document.getElementById('authNoticeMessage');
-            if (notice) {
-                noticeEl.classList.remove('hidden');
-            } else {
-                noticeEl.classList.add('hidden');
-            }
-        }
-
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.add('hidden');
-        }
-
-        function switchAuthTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const regForm = document.getElementById('registerForm');
-            const tabLoginBtn = document.getElementById('tabLoginBtn');
-            const tabRegisterBtn = document.getElementById('tabRegisterBtn');
-
-            if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                regForm.classList.add('hidden');
-                tabLoginBtn.className = "flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 uppercase tracking-wider";
-                tabRegisterBtn.className = "flex-1 py-3 text-sm font-bold text-stone-400 border-b-2 border-transparent hover:text-stone-200 uppercase tracking-wider";
-            } else {
-                regForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
-                tabRegisterBtn.className = "flex-1 py-3 text-sm font-bold text-amber-400 border-b-2 border-amber-400 uppercase tracking-wider";
-                tabLoginBtn.className = "flex-1 py-3 text-sm font-bold text-stone-400 border-b-2 border-transparent hover:text-stone-200 uppercase tracking-wider";
-            }
-        }
-
-        function handleRegisterSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const phone = document.getElementById('regPhone').value;
-            const cpf = document.getElementById('regCpf').value;
-            const cep = document.getElementById('regCep').value;
-            const address = document.getElementById('regAddress').value;
-
-            currentUser = { name, email, phone, cpf, cep, address };
-            updateUserUI();
-            closeAuthModal();
-            showToast(`Cadastro realizado com sucesso! Bem-vindo(a), ${name.split(' ')[0]}.`);
-
-            // If user had items in cart, re-open checkout
-            if (cart.length > 0) {
-                openCheckoutModal();
-            }
-        }
-
-        function handleLoginSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            currentUser = {
-                name: "Cliente São Lourenço",
-                email: email,
-                phone: "(81) 99888-1122",
-                cpf: "123.456.789-00",
-                cep: "54735-000",
-                address: "Av. Dr. Francisco Correia, 150 - Centro, São Lourenço da Mata"
-            };
-            updateUserUI();
-            closeAuthModal();
-            showToast("Login realizado com sucesso!");
-
-            if (cart.length > 0) {
-                openCheckoutModal();
-            }
-        }
-
-        function logoutUser() {
-            currentUser = null;
-            updateUserUI();
-            showToast("Você saiu da sua conta.");
-        }
+        // --- 6. CARRINHO DE COMPRAS ---
+        let cart = [];
 
         function toggleCartDrawer() {
-            document.getElementById('cartDrawer').classList.toggle('hidden');
+            const drawer = document.getElementById("cartDrawer");
+            if (drawer) drawer.classList.toggle("hidden");
         }
 
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        }
-
-        function addToCart(productId, type) {
-            let product;
-            if (type === 'beer') {
-                product = beerProducts.find(p => p.id === productId);
-            } else {
-                product = kegProducts.find(p => p.id === productId);
-            }
-
-            if (!product) return;
-
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-
+        function addToCart(name, price) {
+            cart.push({ name, price });
             updateCartUI();
-            showToast(`${product.title} adicionado ao carrinho!`);
-        }
-
-        function updateCartQty(index, delta) {
-            cart[index].qty += delta;
-            if (cart[index].qty <= 0) {
-                cart.splice(index, 1);
-            }
-            updateCartUI();
+            toggleCartDrawer();
         }
 
         function updateCartUI() {
-            const container = document.getElementById('cartItemsContainer');
-            const badge = document.getElementById('cartBadge');
-            const totalEl = document.getElementById('cartTotal');
+            const badge = document.getElementById("cartBadge");
+            const list = document.getElementById("cartItemsList");
+            const totalEl = document.getElementById("cartTotalValue");
 
-            const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
-            const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-
-            badge.innerText = totalItems;
-            totalEl.innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            if (badge) badge.innerText = cart.length;
 
             if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-16 text-stone-500 space-y-3">
-                        <i class="fa-solid fa-beer-mug-empty text-5xl text-stone-700"></i>
-                        <p class="font-medium text-stone-400">Seu carrinho está vazio.</p>
-                        <p class="text-xs">Escolha cervejas ou barris de chopp para começar!</p>
-                    </div>
-                `;
+                if (list) list.innerHTML = `<p class="text-stone-500 text-center py-8 text-sm">Sua sacola está vazia.</p>`;
+                if (totalEl) totalEl.innerText = "R$ 0,00";
                 return;
             }
 
-            container.innerHTML = cart.map((item, idx) => `
-                <div class="flex items-center justify-between bg-stone-950 p-4 rounded-xl border border-stone-800">
-                    <div class="flex-1 pr-3">
-                        <h4 class="font-bold text-white text-xs uppercase font-display">${item.title}</h4>
-                        <p class="text-[10px] text-amber-400 font-semibold mt-0.5">${item.category}</p>
-                        <p class="text-xs font-bold text-white mt-1">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</p>
-                    </div>
-                    <div class="flex items-center space-x-2 bg-stone-900 px-2 py-1 rounded-lg border border-stone-800">
-                        <button onclick="updateCartQty(${idx}, -1)" class="w-6 h-6 rounded flex items-center justify-center text-stone-300 hover:bg-stone-800 font-bold text-xs">-</button>
-                        <span class="text-xs font-bold text-amber-400 w-4 text-center">${item.qty}</span>
-                        <button onclick="updateCartQty(${idx}, 1)" class="w-6 h-6 rounded flex items-center justify-center text-stone-300 hover:bg-stone-800 font-bold text-xs">+</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function proceedToCheckout() {
-            if (cart.length === 0) {
-                showToast("Seu carrinho está vazio!");
-                return;
-            }
-
-            if (!currentUser) {
-                toggleCartDrawer();
-                openAuthModal(true); // show notice asking to log in
-                return;
-            }
-
-            toggleCartDrawer();
-            openCheckoutModal();
-        }
-
-        function openCheckoutModal() {
-            document.getElementById('checkoutModal').classList.remove('hidden');
-            
-            // Step 1 setup
-            document.getElementById('checkoutAddressDisplay').innerText = currentUser.address;
-            document.getElementById('checkoutUserDisplay').innerText = `Cliente: ${currentUser.name} • CPF: ${currentUser.cpf} • Tel: ${currentUser.phone}`;
-
-            const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-            document.getElementById('checkoutTotalDisplay').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
-
-            const summaryContainer = document.getElementById('checkoutSummaryList');
-            summaryContainer.innerHTML = cart.map(item => `
-                <div class="flex justify-between items-center text-xs bg-stone-950 p-2.5 rounded-lg border border-stone-800">
-                    <span class="text-stone-300">${item.qty}x ${item.title}</span>
-                    <span class="font-bold text-amber-400">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
-                </div>
-            `).join('');
-
-            // Installment options for Credit Card
-            const installSelect = document.getElementById('cardInstallmentsSelect');
-            installSelect.innerHTML = '';
-            for (let i = 1; i <= 6; i++) {
-                const part = (totalPrice / i).toFixed(2).replace('.', ',');
-                installSelect.innerHTML += `<option value="${i}">${i}x de R$ ${part} ${i === 1 ? 'à vista' : 'sem juros'}</option>`;
-            }
-
-            goToCheckoutStep(1);
-        }
-
-        function closeCheckoutModal() {
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
-
-        function goToCheckoutStep(step) {
-            const step1 = document.getElementById('checkoutStep1');
-            const step2 = document.getElementById('checkoutStep2');
-            const ind1 = document.getElementById('step1Indicator');
-            const ind2 = document.getElementById('step2Indicator');
-
-            if (step === 1) {
-                step1.classList.remove('hidden');
-                step2.classList.add('hidden');
-                ind1.className = "flex-1 bg-amber-500 h-1.5 rounded-full";
-                ind2.className = "flex-1 bg-stone-800 h-1.5 rounded-full";
-            } else {
-                step1.classList.add('hidden');
-                step2.classList.remove('hidden');
-                ind1.className = "flex-1 bg-amber-500 h-1.5 rounded-full";
-                ind2.className = "flex-1 bg-amber-500 h-1.5 rounded-full";
-            }
-        }
-
-        function selectPaymentMethod(method) {
-            selectedPaymentMethod = method;
-            const pixSection = document.getElementById('pixPaymentSection');
-            const cardSection = document.getElementById('cardPaymentSection');
-            const payTabPix = document.getElementById('payTabPix');
-            const payTabCard = document.getElementById('payTabCard');
-
-            if (method === 'pix') {
-                pixSection.classList.remove('hidden');
-                cardSection.classList.add('hidden');
-                payTabPix.className = "p-4 rounded-xl border-2 border-amber-500 bg-amber-500/10 text-white font-bold text-sm flex items-center justify-center space-x-2";
-                payTabCard.className = "p-4 rounded-xl border-2 border-stone-800 bg-stone-950 text-stone-400 font-bold text-sm flex items-center justify-center space-x-2 hover:border-stone-700";
-            } else {
-                cardSection.classList.remove('hidden');
-                pixSection.classList.add('hidden');
-                payTabCard.className = "p-4 rounded-xl border-2 border-amber-500 bg-amber-500/10 text-white font-bold text-sm flex items-center justify-center space-x-2";
-                payTabPix.className = "p-4 rounded-xl border-2 border-stone-800 bg-stone-950 text-stone-400 font-bold text-sm flex items-center justify-center space-x-2 hover:border-stone-700";
-            }
-        }
-
-        function copyPixKey() {
-            const input = document.getElementById('pixPayloadInput');
-            input.select();
-            document.execCommand('copy');
-            showToast("Chave PIX copiada para a área de transferência!");
-        }
-
-        function confirmPixPaymentSimulated() {
-            const orderId = '#SLM-' + Math.floor(100000 + Math.random() * 900000);
-            const total = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-            const orderItems = [...cart];
-
-            // Create Order Record
-            const orderRecord = {
-                id: orderId,
-                date: new Date().toLocaleString('pt-BR'),
-                items: orderItems,
-                total: total,
-                paymentMethod: 'PIX (Comprovante Enviado)',
-                status: 'Aprovado / Em Preparação'
-            };
-
-            ordersHistory.unshift(orderRecord);
-            renderOrdersUI();
-
-            // Simulate Email Notifications
-            dispatchSimulatedEmails(orderRecord, 'PIX');
-
-            // Reset Cart
-            cart = [];
-            updateCartUI();
-
-            closeCheckoutModal();
-
-            // Show Success Modal
-            const msgEl = document.getElementById('successModalMessage');
-            msgEl.innerHTML = `
-                <p class="font-bold text-emerald-400 mb-2">Comprovante do PIX Processado!</p>
-                <p class="text-stone-300 text-xs mb-3">
-                    Seu pedido <strong>${orderId}</strong> foi registrado. O comprovante do PIX foi enviado para a fábrica e uma confirmação foi enviada para o seu e-mail (<strong>${currentUser.email}</strong>).
-                </p>
-                <p class="text-[11px] text-amber-400">Tempo estimado de entrega: 40 a 60 minutos.</p>
-            `;
-            document.getElementById('successOrderModal').classList.remove('hidden');
-        }
-
-        function updateCardPreview() {
-            const num = document.getElementById('cardNumberInput').value;
-            const name = document.getElementById('cardNameInput').value;
-            const exp = document.getElementById('cardExpiryInput').value;
-
-            document.getElementById('cardPreviewNumber').innerText = num || "•••• •••• •••• ••••";
-            document.getElementById('cardPreviewName').innerText = name || "NOME DO TITULAR";
-            document.getElementById('cardPreviewExpiry').innerText = exp || "MM/AA";
-        }
-
-        function handleCreditCardPayment(e) {
-            e.preventDefault();
-
-            const btnText = document.getElementById('payCardBtnText');
-            btnText.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processando com a Operadora...`;
-
-            setTimeout(() => {
-                const orderId = '#SLM-' + Math.floor(100000 + Math.random() * 900000);
-                const total = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-                const orderItems = [...cart];
-
-                const orderRecord = {
-                    id: orderId,
-                    date: new Date().toLocaleString('pt-BR'),
-                    items: orderItems,
-                    total: total,
-                    paymentMethod: 'Cartão de Crédito (Aprovado)',
-                    status: 'Aprovado / Em Preparação'
-                };
-
-                ordersHistory.unshift(orderRecord);
-                renderOrdersUI();
-
-                dispatchSimulatedEmails(orderRecord, 'CARTÃO');
-
-                cart = [];
-                updateCartUI();
-
-                btnText.innerText = "Pagar Agora via Cartão";
-                closeCheckoutModal();
-
-                const msgEl = document.getElementById('successModalMessage');
-                msgEl.innerHTML = `
-                    <p class="font-bold text-emerald-400 mb-2">Pagamento com Cartão Aprovado!</p>
-                    <p class="text-stone-300 text-xs mb-3">
-                        O pagamento do pedido <strong>${orderId}</strong> foi confirmado em tempo real. O comprovante de processamento foi enviado para seu e-mail (<strong>${currentUser.email}</strong>).
-                    </p>
-                    <p class="text-[11px] text-amber-400">Preparando seu pedido na cervejaria!</p>
-                `;
-                document.getElementById('successOrderModal').classList.remove('hidden');
-            }, 1800);
-        }
-
-        function dispatchSimulatedEmails(order, method) {
-            const customerEmail = {
-                id: 'EM-' + Math.floor(1000 + Math.random() * 9000),
-                to: currentUser.email,
-                subject: `Confirmação de Pedido ${order.id} - Cervejaria São Lourenço`,
-                date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-                body: `
-                    <div style="font-family: sans-serif; padding: 15px; color: #fff;">
-                        <h2 style="color: #F3A812;">Cervejaria São Lourenço da Mata</h2>
-                        <p>Olá <strong>${currentUser.name}</strong>, seu pedido foi recebido com sucesso!</p>
-                        <p><strong>Pedido:</strong> ${order.id}<br><strong>Pagamento:</strong> ${method}<br><strong>Status:</strong> Aprovado</p>
-                        <hr style="border-color: #333;">
-                        <p style="font-size: 12px; color: #aaa;">Endereço de entrega: ${currentUser.address}</p>
-                    </div>
-                `
-            };
-
-            const breweryEmail = {
-                id: 'EM-' + Math.floor(1000 + Math.random() * 9000),
-                to: 'pedidos@cervejariasaoulourenco.com.br',
-                subject: `🚨 NOVO PEDIDO RECEBIDO ${order.id} - [Comprovante ${method}]`,
-                date: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-                body: `
-                    <div style="font-family: sans-serif; padding: 15px; color: #fff;">
-                        <h3 style="color: #F3A812;">Aviso para Produção &amp; Entregas</h3>
-                        <p><strong>Cliente:</strong> ${currentUser.name} (${currentUser.phone})</p>
-                        <p><strong>CPF:</strong> ${currentUser.cpf}</p>
-                        <p><strong>Endereço:</strong> ${currentUser.address}</p>
-                        <p><strong>Forma de Pagamento:</strong> ${method} (Confirmado)</p>
-                        <p><strong>Total:</strong> R$ ${order.total.toFixed(2)}</p>
-                    </div>
-                `
-            };
-
-            simulatedEmails.unshift(customerEmail, breweryEmail);
-            renderEmailInboxUI();
-        }
-
-        function renderEmailInboxUI() {
-            const badge = document.getElementById('emailBadge');
-            badge.innerText = simulatedEmails.length;
-
-            const list = document.getElementById('emailInboxList');
-
-            if (simulatedEmails.length === 0) {
-                list.innerHTML = `
-                    <div class="text-center py-12 text-stone-500">
-                        <i class="fa-solid fa-envelope-open text-4xl mb-2 text-stone-700"></i>
-                        <p class="text-xs">Nenhum e-mail simulado disparado ainda.</p>
-                        <p class="text-[11px] text-stone-600 mt-1">Faça um pedido para ver os comprovantes enviados em tempo real.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = simulatedEmails.map(mail => `
-                <div class="bg-stone-950 p-4 rounded-xl border border-stone-800 space-y-2">
-                    <div class="flex justify-between items-start text-xs">
-                        <div>
-                            <span class="text-amber-400 font-bold block">${mail.subject}</span>
-                            <span class="text-stone-400 text-[11px]">Para: <strong class="text-white">${mail.to}</strong></span>
-                        </div>
-                        <span class="text-[10px] bg-stone-900 px-2 py-1 rounded text-stone-400 font-mono">${mail.date}</span>
-                    </div>
-                    <div class="bg-stone-900 p-3 rounded-lg border border-stone-800 text-xs text-stone-300">
-                        ${mail.body}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleEmailInboxModal() {
-            document.getElementById('emailInboxModal').classList.toggle('hidden');
-        }
-
-        function renderOrdersUI() {
-            const container = document.getElementById('ordersContainer');
-            const ordersBadgeNav = document.getElementById('ordersBadgeNav');
-
-            if (ordersHistory.length > 0) {
-                ordersBadgeNav.innerText = ordersHistory.length;
-                ordersBadgeNav.classList.remove('hidden');
-                ordersBadgeNav.classList.add('flex');
-            }
-
-            if (ordersHistory.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-stone-900 p-8 rounded-2xl border border-stone-800 text-center text-stone-500 space-y-2">
-                        <i class="fa-solid fa-box-open text-4xl text-stone-700"></i>
-                        <p class="font-medium text-stone-300 text-sm">Você ainda não realizou nenhum pedido.</p>
-                        <p class="text-xs text-stone-500">Seus pedidos concluídos aparecerão aqui com atualizações de entrega.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = ordersHistory.map(ord => `
-                <div class="bg-stone-900 p-6 rounded-2xl border border-stone-800 shadow-xl space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-stone-800 pb-3 gap-2">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-base font-extrabold text-amber-400 font-display">${ord.id}</span>
-                                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-                                    ${ord.status}
-                                </span>
+            let total = 0;
+            if (list) {
+                list.innerHTML = cart.map((item, idx) => {
+                    total += item.price;
+                    return `
+                        <div class="flex justify-between items-center bg-stone-950 p-3 rounded-xl border border-stone-800">
+                            <div>
+                                <p class="text-sm font-bold text-white">${item.name}</p>
+                                <p class="text-xs text-amber-400 font-semibold">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
                             </div>
-                            <span class="text-xs text-stone-400">${ord.date} • ${ord.paymentMethod}</span>
+                            <button onclick="removeFromCart(${idx})" class="text-stone-500 hover:text-red-400 p-1 cursor-pointer">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
                         </div>
-                        <span class="text-xl font-black text-white">R$ ${ord.total.toFixed(2).replace('.', ',')}</span>
-                    </div>
+                    `;
+                }).join('');
+            }
 
-                    <div class="space-y-2">
-                        <span class="text-[11px] text-stone-400 uppercase font-bold">Itens do Pedido:</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            ${ord.items.map(item => `
-                                <div class="bg-stone-950 p-2.5 rounded-lg border border-stone-800/80 flex justify-between text-xs">
-                                    <span class="text-white">${item.qty}x ${item.title}</span>
-                                    <span class="text-amber-400 font-bold">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            if (totalEl) totalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         }
 
-        function refreshOrdersUI() {
-            renderOrdersUI();
-            showToast("Lista de pedidos atualizada.");
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
         }
 
-        function closeSuccessModalAndOpenInbox() {
-            document.getElementById('successOrderModal').classList.add('hidden');
-            toggleEmailInboxModal();
+        function checkoutCart() {
+            if (cart.length === 0) {
+                alert("Sua sacola está vazia!");
+                return;
+            }
+            const itemsMsg = cart.map(i => `- ${i.name} (R$ ${i.price.toFixed(2)})`).join('%0A');
+            const total = cart.reduce((acc, i) => acc + i.price, 0);
+            const text = `Olá! Gostaria de fazer o seguinte pedido:%0A${itemsMsg}%0A%0A*Total: R$ ${total.toFixed(2)}*`;
+            window.open(`https://wa.me/5581998765432?text=${text}`, '_blank');
         }
 
-        function closeSuccessModalAndOpenOrders() {
-            document.getElementById('successOrderModal').classList.add('hidden');
-            window.location.hash = "#meus-pedidos";
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMessage');
-            toastMsg.innerText = msg;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3200);
-        }
-
+        // --- 7. FORMULÁRIO DE CONTATO ---
         function handleContactSubmit(e) {
             e.preventDefault();
-            showToast("Mensagem enviada com sucesso! Retornaremos em breve.");
+            alert("Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.");
             e.target.reset();
         }
     </script>
